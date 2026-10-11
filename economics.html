@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh" data-lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MOBILE BEAN · 单元经济与测算 — 一辆车的回本模型</title>
+<meta name="description" content="移动咖啡车单元经济：单车投入 15—25 万、日均 80—120 杯、毛利 65%+、回本 8—14 个月。含交互测算器、成本结构与总部利润来源。">
+<meta name="page-title" data-page-title data-zh="单元经济与测算 · 一辆车的回本模型" data-en="Unit Economics · The Payback Model">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231d9bf0'/%3E%3Ctext x='16' y='23' font-size='18' text-anchor='middle' fill='white'%3E%E2%97%86%3C/text%3E%3C/svg%3E">
+<script>try{document.documentElement.setAttribute('data-lang',localStorage.getItem('mb_lang')||'zh')}catch(e){}</script>
+</head>
+<body>
+<header class="nav"></header>
+
+<main>
+  <div class="wrap page-head">
+    <div class="crumb"><a href="index.html"><span class="en">Overview</span><span class="zh">总览</span></a> / <span class="en">The Model</span><span class="zh">商业模型</span> / <span class="en">Unit Economics</span><span class="zh">单元经济</span></div>
+    <span class="eyebrow"><i></i><span class="en">Interactive · Sensitivity incl.</span><span class="zh">交互测算 · 含敏感度</span></span>
+    <h1 class="h1-sub">
+      <span class="en">One cart. Ten months to pay back.</span>
+      <span class="zh">一辆车，十个月回本。</span>
+    </h1>
+    <p class="lede">
+      <span class="en">Drag the inputs below to see how cups per day, ticket and gross margin move the payback period. Base case: 90 cups/day at ¥22, 65% gross margin, ¥200k invested.</span>
+      <span class="zh">拖动下面的参数，看日均出杯、客单价和毛利率如何改变回本周期。基准情形：日均 90 杯、客单 ¥22、毛利 65%、投入 ¥20 万。</span>
+    </p>
+  </div>
+
+  <section class="tight" id="calc">
+    <div class="wrap">
+      <div class="calc rv">
+        <div class="calc-panel">
+          <h3 style="margin-bottom:22px"><span class="en">Inputs</span><span class="zh">输入参数</span></h3>
+          <div class="field">
+            <label><span><span class="en">Cups per day</span><span class="zh">日均出杯</span></span><b data-live="cups">90</b></label>
+            <input id="cups" type="range" min="40" max="180" step="5" value="90">
+          </div>
+          <div class="field">
+            <label><span><span class="en">Average ticket</span><span class="zh">平均客单价</span></span><b data-live="ticket">¥22</b></label>
+            <input id="ticket" type="range" min="16" max="40" step="1" value="22">
+          </div>
+          <div class="field">
+            <label><span><span class="en">Gross margin</span><span class="zh">毛利率</span></span><b data-live="gp">65%</b></label>
+            <input id="gp" type="range" min="50" max="78" step="1" value="65">
+          </div>
+          <div class="field">
+            <label><span><span class="en">Initial capital (cart)</span><span class="zh">初期投入（整车）</span></span><b data-live="invest">¥200,000</b></label>
+            <input id="invest" type="range" min="120000" max="300000" step="5000" value="200000">
+          </div>
+          <div class="field" style="margin-bottom:6px">
+            <label><span><span class="en">Monthly fixed cost</span><span class="zh">月固定运营成本</span></span><b data-live="opex">¥19,500</b></label>
+            <input id="opex" type="range" min="12000" max="32000" step="500" value="19500">
+          </div>
+          <p class="calc-note">
+            <span class="en">Monthly fixed cost = 2 staff, pitch fees, utilities and consumables, insurance and maintenance. Rent is replaced by a day-rate pitch fee — the structural advantage of the cart.</span>
+            <span class="zh">月固定成本 = 2 名人力 + 点位费 + 水电耗材 + 保险与维护。移动车用日结点位费替代店租，这是结构性优势。</span>
+          </p>
+        </div>
+
+        <div>
+          <div class="calc-out" style="margin-bottom:16px">
+            <div class="o"><div class="k"><span class="en">Monthly revenue</span><span class="zh">月营收</span></div><div class="v" id="out-rev">¥59,400</div></div>
+            <div class="o"><div class="k"><span class="en">Monthly gross profit</span><span class="zh">月毛利</span></div><div class="v" id="out-gross">¥38,610</div></div>
+            <div class="o"><div class="k"><span class="en">Monthly net profit</span><span class="zh">月净利</span></div><div class="v u" id="out-net">¥19,110</div></div>
+            <div class="o"><div class="k"><span class="en">Payback</span><span class="zh">回本周期</span></div><div class="v a" id="out-payback">10.5 个月</div></div>
+            <div class="o"><div class="k"><span class="en">Break-even volume</span><span class="zh">盈亏平衡出杯</span></div><div class="v" id="out-be">46 杯/日</div></div>
+            <div class="o"><div class="k"><span class="en">Annualised ROI</span><span class="zh">年化投入回报</span></div><div class="v u" id="out-roi">115%</div></div>
+          </div>
+          <div class="chart-box">
+            <div class="cap">
+              <h4><span class="en">Cumulative cash flow</span><span class="zh">累计现金流曲线</span></h4>
+              <span><span class="en">18 months from launch</span><span class="zh">开业后 18 个月</span></span>
+            </div>
+            <div id="chart-payback" class="chart"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="grid g-2-1">
+        <div class="rv">
+          <div class="sec-head">
+            <div class="sec-tag"><span class="en">Base case</span><span class="zh">基准情形</span></div>
+            <h2><span class="en">Single cart, monthly P&amp;L</span><span class="zh">单辆移动车月度损益</span></h2>
+          </div>
+          <div class="tbl-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th><span class="en">Line item</span><span class="zh">项目</span></th>
+                  <th><span class="en">Basis</span><span class="zh">计算口径</span></th>
+                  <th class="num"><span class="en">Monthly</span><span class="zh">月金额</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><b><span class="en">Revenue</span><span class="zh">营业收入</span></b></td><td><span class="en">90 cups × ¥22 × 30 days</span><span class="zh">90 杯 × ¥22 × 30 天</span></td><td class="num">¥59,400</td></tr>
+                <tr><td><span class="en">Green bean &amp; consumables</span><span class="zh">豆子与耗材成本</span></td><td><span class="en">35% of revenue</span><span class="zh">占营收 35%</span></td><td class="num" style="color:var(--down)">−¥20,790</td></tr>
+                <tr class="total"><td><span class="en">Gross profit</span><span class="zh">毛利</span></td><td><span class="en">65% gross margin</span><span class="zh">毛利率 65%</span></td><td class="num" style="color:var(--up)">¥38,610</td></tr>
+                <tr><td><span class="en">Staff (2 baristas)</span><span class="zh">人力（2 名咖啡师）</span></td><td><span class="en">Fixed monthly</span><span class="zh">固定月度</span></td><td class="num" style="color:var(--down)">−¥11,000</td></tr>
+                <tr><td><span class="en">Pitch / venue fees</span><span class="zh">点位 / 场地费</span></td><td><span class="en">Day-rate, replaces rent</span><span class="zh">日结，替代店租</span></td><td class="num" style="color:var(--down)">−¥4,000</td></tr>
+                <tr><td><span class="en">Utilities &amp; supplies</span><span class="zh">水电与日常耗材</span></td><td><span class="en">Water, power, cups, milk</span><span class="zh">水、电、杯、奶</span></td><td class="num" style="color:var(--down)">−¥2,000</td></tr>
+                <tr><td><span class="en">Insurance, maintenance, licence</span><span class="zh">保险、维护、证照</span></td><td><span class="en">Vehicle-class costs</span><span class="zh">车辆类成本</span></td><td class="num" style="color:var(--down)">−¥2,500</td></tr>
+                <tr class="total"><td><span class="en">Net profit</span><span class="zh">净利</span></td><td><span class="en">Gross profit − fixed cost</span><span class="zh">毛利 − 固定成本</span></td><td class="num" style="color:var(--up)">¥19,110</td></tr>
+                <tr><td><span class="en">Payback on ¥200,000</span><span class="zh">¥20 万投入回本</span></td><td><span class="en">Capital ÷ net profit</span><span class="zh">投入 ÷ 月净利</span></td><td class="num hl">10.5 <span class="en">months</span><span class="zh">个月</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="sec-sub" style="margin-top:14px">
+            <span class="en">The cart's real edge is the denominator: no five-year lease, no renovation amortisation, no fit-out capex sitting on a failed pitch.</span>
+            <span class="zh">移动车真正的优势在分母：没有五年租约、没有装修摊销、没有压在一个失败点位上的固定资产。</span>
+          </p>
+        </div>
+
+        <div class="chart-box rv">
+          <div class="cap"><h4><span class="en">HQ profit mix at scale</span><span class="zh">规模化后的总部利润结构</span></h4></div>
+          <div id="chart-mix" class="chart tall"></div>
+          <p class="calc-note" style="padding:0 6px 4px">
+            <span class="en">Franchise fees are intentionally absent from the mix.</span>
+            <span class="zh">图中刻意没有「加盟费」这一项。</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head rv">
+        <div class="sec-tag"><span class="en">Scenarios</span><span class="zh">情形</span></div>
+        <h2><span class="en">Conservative, base and upside</span><span class="zh">保守、基准与乐观</span></h2>
+      </div>
+      <div class="tbl-wrap rv">
+        <table>
+          <thead>
+            <tr>
+              <th><span class="en">Scenario</span><span class="zh">情形</span></th>
+              <th class="num"><span class="en">Cups/day</span><span class="zh">日均出杯</span></th>
+              <th class="num"><span class="en">Ticket</span><span class="zh">客单价</span></th>
+              <th class="num"><span class="en">Monthly net</span><span class="zh">月净利</span></th>
+              <th class="num"><span class="en">Payback</span><span class="zh">回本</span></th>
+              <th><span class="en">Read</span><span class="zh">解读</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><b><span class="en">Conservative</span><span class="zh">保守</span></b></td><td class="num">65</td><td class="num">¥20</td><td class="num">¥6,000</td><td class="num" style="color:var(--warn)">33 <span class="en">mo</span><span class="zh">个月</span></td><td><span class="en">Below gate — pitch must be replaced, not defended</span><span class="zh">低于闸口 —— 换点位，不要硬撑</span></td></tr>
+            <tr class="total"><td><span class="en">Base</span><span class="zh">基准</span></td><td class="num">90</td><td class="num">¥22</td><td class="num" style="color:var(--up)">¥19,110</td><td class="num hl">10.5 <span class="en">mo</span><span class="zh">个月</span></td><td><span class="en">Target band 8–14 months</span><span class="zh">落在 8—14 个月目标区间</span></td></tr>
+            <tr><td><b><span class="en">Upside</span><span class="zh">乐观</span></b></td><td class="num">120</td><td class="num">¥24</td><td class="num" style="color:var(--up)">¥36,000</td><td class="num hl">5.6 <span class="en">mo</span><span class="zh">个月</span></td><td><span class="en">Premium pitch, second cart funded from cash</span><span class="zh">溢价点位，第二辆车用现金滚出来</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid g2" style="margin-top:16px">
+        <div class="chart-box rv">
+          <div class="cap"><h4><span class="en">Net profit sensitivity to volume</span><span class="zh">净利对出杯量的敏感度</span></h4></div>
+          <div id="chart-sens" class="chart"></div>
+        </div>
+        <div class="card flat rv">
+          <h3 style="margin-bottom:16px"><span class="en">What makes 65% gross margin possible</span><span class="zh">65% 毛利从哪来</span></h3>
+          <ul class="ticks">
+            <li class="ok"><strong><span class="en">Own green bean, own roast.</span><span class="zh">自有豆源、自有烘焙。</span></strong> <span class="en">The largest cost line is internalised, so margin is designed rather than negotiated.</span><span class="zh">最大的一项成本被内部化，毛利是设计出来的，不是谈出来的。</span></li>
+            <li class="ok"><strong><span class="en">Aeroponic yield stability.</span><span class="zh">水培产量稳定。</span></strong> <span class="en">No crop-year swings, no spot-price exposure on the core blend.</span><span class="zh">不受产季波动影响，核心拼配不暴露在现货价格上。</span></li>
+            <li class="ok"><strong><span class="en">Menu engineered for margin.</span><span class="zh">菜单为毛利设计。</span></strong> <span class="en">The recommended cup is also the highest-margin cup.</span><span class="zh">最被推荐的杯子，就是毛利最高的杯子。</span></li>
+            <li class="ok"><strong><span class="en">No rent, only pitch fees.</span><span class="zh">无租金，只有点位费。</span></strong> <span class="en">固定成本 stays controllable when a pitch underperforms.</span><span class="zh">点位表现差时，固定成本是可调的。</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="card card-accent rv" style="padding:32px">
+        <div class="grid g-2-1" style="align-items:center">
+          <div>
+            <h2 style="font-size:clamp(20px,2.6vw,28px)"><span class="en">A cart that pays back in 10 months compounds into 20 carts.</span><span class="zh">10 个月回本的车，会自己滚成 20 辆。</span></h2>
+            <p class="sec-sub" style="margin-top:12px">
+              <span class="en">The unit economics are the expansion plan. Everything else — flagship, pod, roastery — is financed by this number working.</span>
+              <span class="zh">单元经济本身就是扩张计划。旗舰店、种植舱、烘焙中心，全靠这个数字成立才有钱做。</span>
+            </p>
+          </div>
+          <div class="cta" style="justify-content:flex-end">
+            <a class="btn primary" href="franchise.html"><span class="en">Franchise &amp; governance</span><span class="zh">加盟与治理</span> →</a>
+            <a class="btn" href="roadmap.html"><span class="en">Roadmap</span><span class="zh">路线图</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/chrome.js"></script>
+<script src="assets/js/charts.js"></script>
+</body>
+</html>
